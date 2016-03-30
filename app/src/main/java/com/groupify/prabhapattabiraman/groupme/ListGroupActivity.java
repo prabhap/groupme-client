@@ -28,6 +28,7 @@ public class ListGroupActivity extends AppCompatActivity {
         TextView noGroupMsg = (TextView) findViewById(R.id.no_group_msg);
         String[] groupsInRange = getIntent().getStringArrayExtra(LocationProber.GROUPS);
         final ArrayList<String> list = new ArrayList<String>();
+        final ListGroupActivity listGroupActivity = this;
         for (int i = 0; i < groupsInRange.length; ++i) {
             list.add(groupsInRange[i]);
         }
@@ -35,8 +36,14 @@ public class ListGroupActivity extends AppCompatActivity {
         listview.setVisibility(list.isEmpty() ? View.INVISIBLE : View.VISIBLE);
         noGroupMsg.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
 
-
-        listview.setAdapter(new CustomArrayAdapter(this, R.layout.simple_list_item, groupsInRange));
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(listGroupActivity, ConversationActivity.class);
+                listGroupActivity.startActivity(intent);
+            }
+        };
+        listview.setAdapter(new CustomArrayAdapter(this, R.layout.simple_list_item, groupsInRange, onClickListener));
     }
 
     public void createNewGroup(View view) {

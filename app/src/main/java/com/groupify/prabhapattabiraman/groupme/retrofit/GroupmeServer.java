@@ -20,4 +20,9 @@ public interface GroupmeServer {
     @FormUrlEncoded
     Call<ResponseBody> createGroup(@Field("name") String name, @Field("geoLocation") String geoLocation,
                                    @Field("range") int range, @Field("open") boolean open);
+
+    @POST("/groups/{id}/conversation")
+    @FormUrlEncoded
+    Call<ResponseBody> createConversation(@Field("conversation") String conversation);
+
 }

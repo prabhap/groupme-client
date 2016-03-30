@@ -70,7 +70,6 @@ public class LocationProber implements LocationListener{
             @Override
             public void onResponse(Call<List<Map<String, String>>> call, Response<List<Map<String, String>>> response) {
                 List<Map<String, String>> groupsInRange = response.body();
-//                if(groupsInRange == null) groupsInRange = new ArrayList<Map<String, String>>();
                 String[] groupsInRangeArray = new String[groupsInRange.size()];
                 List<String> groups = new ArrayList<String>();
                 for (Map<String, String> keyPair  : groupsInRange) {

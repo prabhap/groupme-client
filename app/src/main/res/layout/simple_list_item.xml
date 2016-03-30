@@ -13,7 +13,7 @@
          />
 
     <Button
-        android:id="@+id/join"
+        android:id="@+id/joinConversation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Join"

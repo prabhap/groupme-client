@@ -2,6 +2,7 @@ package com.groupify.prabhapattabiraman.groupme.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +20,16 @@ public class CustomArrayAdapter extends ArrayAdapter {
 
 
     private String[] groupsInRange;
+    private View.OnClickListener onClickListener;
 
-    public CustomArrayAdapter(ListGroupActivity listGroupActivity, int simple_list_item, String[] groupsInRange) {
+    public CustomArrayAdapter(ListGroupActivity listGroupActivity, int simple_list_item, String[] groupsInRange, View.OnClickListener listener) {
         super(listGroupActivity, simple_list_item, groupsInRange);
+        this.onClickListener = listener;
     }
 
     static class ViewHolder {
         TextView text;
-        Button btn;
+        Button joinButton;
     }
 
     @Override
@@ -40,19 +43,14 @@ public class CustomArrayAdapter extends ArrayAdapter {
             rowView = inflater.inflate(R.layout.simple_list_item, parent, false);
             ViewHolder h = new ViewHolder();
             h.text = (TextView) rowView.findViewById(R.id.list_item);
-            h.btn = (Button) rowView.findViewById(R.id.join);
+            h.joinButton = (Button) rowView.findViewById(R.id.joinConversation);
             rowView.setTag(h);
         }
 
         ViewHolder h = (ViewHolder) rowView.getTag();
 
         h.text.setText(value);
-//        h.indicator.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // DO what you want to recieve on btn click there.
-//            }
-//        });
+        h.joinButton.setOnClickListener(onClickListener);
 
         return rowView;
     }
