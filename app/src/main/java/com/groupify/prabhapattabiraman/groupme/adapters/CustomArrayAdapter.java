@@ -1,30 +1,31 @@
 package com.groupify.prabhapattabiraman.groupme.adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
+import com.groupify.prabhapattabiraman.groupme.ConversationActivity;
 import com.groupify.prabhapattabiraman.groupme.ListGroupActivity;
 import com.groupify.prabhapattabiraman.groupme.R;
+import com.groupify.prabhapattabiraman.groupme.util.pojo.Group;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class CustomArrayAdapter extends ArrayAdapter {
 
 
+    public static final String GROUP_ID = "group_id";
     private String[] groupsInRange;
-    private View.OnClickListener onClickListener;
+    private ListGroupActivity currentActivity;
 
-    public CustomArrayAdapter(ListGroupActivity listGroupActivity, int simple_list_item, String[] groupsInRange, View.OnClickListener listener) {
+    public CustomArrayAdapter(ListGroupActivity listGroupActivity, int simple_list_item, ArrayList<Group> groupsInRange) {
         super(listGroupActivity, simple_list_item, groupsInRange);
-        this.onClickListener = listener;
+        this.currentActivity = listGroupActivity;
     }
 
     static class ViewHolder {
@@ -34,7 +35,9 @@ public class CustomArrayAdapter extends ArrayAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        String value = (String) getItem(position);
+        Group group = (Group) getItem(position);
+
+
 
         View rowView = convertView;
 
@@ -49,9 +52,21 @@ public class CustomArrayAdapter extends ArrayAdapter {
 
         ViewHolder h = (ViewHolder) rowView.getTag();
 
-        h.text.setText(value);
-        h.joinButton.setOnClickListener(onClickListener);
+        h.text.setText(group.getName());
+        h.joinButton.setOnClickListener(attachOnClickListener(group.getId()));
 
         return rowView;
+    }
+
+    private View.OnClickListener attachOnClickListener(final int groupId) {
+        return  new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(currentActivity, ConversationActivity.class);
+                intent.putExtra(GROUP_ID, groupId);
+                currentActivity.startActivity(intent);
+            }
+        };
+
     }
 }

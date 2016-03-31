@@ -37,7 +37,7 @@ public class CreateNewGroupActivity extends AppCompatActivity{
         String currentLocation = locationProber.getCurrentLocation(locationManager, this);
 
 
-        Call<ResponseBody> response = new GroupmeServerService().getService().createGroup(groupName, currentLocation, range, open);
+        Call<ResponseBody> response = GroupmeServerService.getServiceInstance().getService().createGroup(groupName, currentLocation, range, open);
         final Context currentActivity = this;
 
         response.enqueue(new Callback<ResponseBody>() {

@@ -10,6 +10,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface GroupmeServer {
@@ -21,8 +22,10 @@ public interface GroupmeServer {
     Call<ResponseBody> createGroup(@Field("name") String name, @Field("geoLocation") String geoLocation,
                                    @Field("range") int range, @Field("open") boolean open);
 
-    @POST("/groups/{id}/conversation")
+    @POST("/groups/{groupId}/conversation")
     @FormUrlEncoded
-    Call<ResponseBody> createConversation(@Field("conversation") String conversation);
+    Call<ResponseBody> createConversation(@Path("groupId") int groupId, @Field("conversation") String text);
 
+    @GET("/groups/{groupId}/conversations")
+    Call<List<Map<String, String>>> getConversations(@Path("groupId") int groupId);
 }

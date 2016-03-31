@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.groupify.prabhapattabiraman.groupme.adapters.CustomArrayAdapter;
 import com.groupify.prabhapattabiraman.groupme.util.LocationProber;
+import com.groupify.prabhapattabiraman.groupme.util.pojo.Group;
 
 import org.w3c.dom.Text;
 
@@ -26,24 +27,12 @@ public class ListGroupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_group);
         final ListView listview = (ListView) findViewById(R.id.listGroups);
         TextView noGroupMsg = (TextView) findViewById(R.id.no_group_msg);
-        String[] groupsInRange = getIntent().getStringArrayExtra(LocationProber.GROUPS);
-        final ArrayList<String> list = new ArrayList<String>();
-        final ListGroupActivity listGroupActivity = this;
-        for (int i = 0; i < groupsInRange.length; ++i) {
-            list.add(groupsInRange[i]);
-        }
+        ArrayList<Group> groupsInRange = getIntent().getParcelableArrayListExtra(LocationProber.GROUPS);
 
-        listview.setVisibility(list.isEmpty() ? View.INVISIBLE : View.VISIBLE);
-        noGroupMsg.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
+        listview.setVisibility(groupsInRange.isEmpty() ? View.INVISIBLE : View.VISIBLE);
+        noGroupMsg.setVisibility(groupsInRange.isEmpty() ? View.VISIBLE : View.INVISIBLE);
 
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(listGroupActivity, ConversationActivity.class);
-                listGroupActivity.startActivity(intent);
-            }
-        };
-        listview.setAdapter(new CustomArrayAdapter(this, R.layout.simple_list_item, groupsInRange, onClickListener));
+        listview.setAdapter(new CustomArrayAdapter(this, R.layout.simple_list_item, groupsInRange));
     }
 
     public void createNewGroup(View view) {

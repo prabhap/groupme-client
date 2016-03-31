@@ -8,8 +8,19 @@ import retrofit2.Call;
 import retrofit2.http.Path;
 
 public class GroupmeServerService extends BaseRetrofitService {
-    public GroupmeServerService() {
+
+    private static GroupmeServerService groupmeServerService;
+
+    public static GroupmeServerService getServiceInstance() {
+        if(groupmeServerService == null) {
+            groupmeServerService = new GroupmeServerService();
+        }
+        return groupmeServerService;
+    }
+
+    protected GroupmeServerService() {
         super();
+
     }
 
     public GroupmeServer getService() {

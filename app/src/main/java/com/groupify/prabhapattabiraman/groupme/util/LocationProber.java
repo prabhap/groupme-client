@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.groupify.prabhapattabiraman.groupme.ListGroupActivity;
 import com.groupify.prabhapattabiraman.groupme.retrofit.impl.GroupmeServerService;
+import com.groupify.prabhapattabiraman.groupme.util.pojo.Group;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 public class LocationProber implements LocationListener{
 
+    private static final String GROUPS_WITH_ID = "groups_with_id";
+    private static final String ID = "id";
     public static String GROUPS = "groups";
     public static String GROUP_NAME = "name";
 
@@ -65,20 +69,20 @@ public class LocationProber implements LocationListener{
     }
 
     public void getCurrentGroups(LocationManager manager, final Context currentContext) {
-        Call<List<Map<String, String>>> groupsInRangeCall = new GroupmeServerService().getService().listGroups(getCurrentLocation(manager, currentContext));
+        Call<List<Map<String, String>>> groupsInRangeCall = GroupmeServerService.getServiceInstance().getService().listGroups(getCurrentLocation(manager, currentContext));
         groupsInRangeCall.enqueue(new Callback<List<Map<String, String>>>() {
             @Override
             public void onResponse(Call<List<Map<String, String>>> call, Response<List<Map<String, String>>> response) {
                 List<Map<String, String>> groupsInRange = response.body();
-                String[] groupsInRangeArray = new String[groupsInRange.size()];
-                List<String> groups = new ArrayList<String>();
+                ArrayList<Group> groups = new ArrayList<Group>();
                 for (Map<String, String> keyPair  : groupsInRange) {
-                    groups.add(keyPair.get(GROUP_NAME));
+                    groups.add(new Group(keyPair.get(GROUP_NAME), Integer.valueOf(keyPair.get(ID))));
                 }
-                groups.toArray(groupsInRangeArray);
 
                 Intent intent = new Intent(currentContext, ListGroupActivity.class);
-                intent.putExtra(GROUPS, groupsInRangeArray);
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList(GROUPS, groups);
+                intent.putExtras(bundle);
                 currentContext.startActivity(intent);
             }
 
