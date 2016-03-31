@@ -22,13 +22,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.groupify.prabhapattabiraman.groupme.util.DBConstants.*;
+
 
 public class LocationProber implements LocationListener{
 
-    private static final String GROUPS_WITH_ID = "groups_with_id";
-    private static final String ID = "id";
-    public static String GROUPS = "groups";
-    public static String GROUP_NAME = "name";
 
     private static LocationProber locationProber;
 
@@ -76,7 +74,7 @@ public class LocationProber implements LocationListener{
                 List<Map<String, String>> groupsInRange = response.body();
                 ArrayList<Group> groups = new ArrayList<Group>();
                 for (Map<String, String> keyPair  : groupsInRange) {
-                    groups.add(new Group(keyPair.get(GROUP_NAME), Integer.valueOf(keyPair.get(ID))));
+                    groups.add(new Group(keyPair.get(GROUP_NAME), Integer.valueOf(keyPair.get(DBConstants.ID))));
                 }
 
                 Intent intent = new Intent(currentContext, ListGroupActivity.class);

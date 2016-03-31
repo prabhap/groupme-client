@@ -12,14 +12,12 @@ import android.widget.TextView;
 import com.groupify.prabhapattabiraman.groupme.ConversationActivity;
 import com.groupify.prabhapattabiraman.groupme.ListGroupActivity;
 import com.groupify.prabhapattabiraman.groupme.R;
+import com.groupify.prabhapattabiraman.groupme.util.DBConstants;
 import com.groupify.prabhapattabiraman.groupme.util.pojo.Group;
 
 import java.util.ArrayList;
 
 public class CustomArrayAdapter extends ArrayAdapter {
-
-
-    public static final String GROUP_ID = "group_id";
     private String[] groupsInRange;
     private ListGroupActivity currentActivity;
 
@@ -36,9 +34,6 @@ public class CustomArrayAdapter extends ArrayAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         Group group = (Group) getItem(position);
-
-
-
         View rowView = convertView;
 
         if (rowView == null) {
@@ -63,7 +58,8 @@ public class CustomArrayAdapter extends ArrayAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(currentActivity, ConversationActivity.class);
-                intent.putExtra(GROUP_ID, groupId);
+                intent.putExtra(DBConstants.GROUP_ID, groupId);
+                intent.putExtra(DBConstants.ACTION, DBConstants.JOIN_AND_LIST);
                 currentActivity.startActivity(intent);
             }
         };

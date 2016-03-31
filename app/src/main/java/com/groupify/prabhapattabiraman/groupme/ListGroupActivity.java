@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.groupify.prabhapattabiraman.groupme.adapters.CustomArrayAdapter;
+import com.groupify.prabhapattabiraman.groupme.util.DBConstants;
 import com.groupify.prabhapattabiraman.groupme.util.LocationProber;
 import com.groupify.prabhapattabiraman.groupme.util.pojo.Group;
 
@@ -27,7 +28,7 @@ public class ListGroupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_group);
         final ListView listview = (ListView) findViewById(R.id.listGroups);
         TextView noGroupMsg = (TextView) findViewById(R.id.no_group_msg);
-        ArrayList<Group> groupsInRange = getIntent().getParcelableArrayListExtra(LocationProber.GROUPS);
+        ArrayList<Group> groupsInRange = getIntent().getParcelableArrayListExtra(DBConstants.GROUPS);
 
         listview.setVisibility(groupsInRange.isEmpty() ? View.INVISIBLE : View.VISIBLE);
         noGroupMsg.setVisibility(groupsInRange.isEmpty() ? View.VISIBLE : View.INVISIBLE);

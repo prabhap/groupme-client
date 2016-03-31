@@ -12,5 +12,6 @@
     <string name="save">Save</string>
     <string name="no_group_msg">There are no groups yet! create a new one now</string>
     <string name="send">send</string>
+    <string name="enter_your_phone_number">Enter your phone number</string>
 
 </resources>

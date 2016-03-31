@@ -26,6 +26,13 @@ public interface GroupmeServer {
     @FormUrlEncoded
     Call<ResponseBody> createConversation(@Path("groupId") int groupId, @Field("conversation") String text);
 
+    @POST("/users/create")
+    @FormUrlEncoded
+    Call<String> createUser(@Field("phoneNumber") String phoneNumber);
+
     @GET("/groups/{groupId}/conversations")
     Call<List<Map<String, String>>> getConversations(@Path("groupId") int groupId);
+
+    @POST("users/{userId}/groups/{groupId}/register")
+    Call<List<Map<String, String>>> registerAndGetConversations(@Path("userId") String userId, @Path("groupId") int groupId);
 }

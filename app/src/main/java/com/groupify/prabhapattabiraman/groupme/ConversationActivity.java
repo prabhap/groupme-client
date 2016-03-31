@@ -1,6 +1,9 @@
 package com.groupify.prabhapattabiraman.groupme;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.view.View;
@@ -11,7 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.groupify.prabhapattabiraman.groupme.adapters.CustomArrayAdapter;
+import com.groupify.prabhapattabiraman.groupme.retrofit.GroupmeServer;
 import com.groupify.prabhapattabiraman.groupme.retrofit.impl.GroupmeServerService;
+import com.groupify.prabhapattabiraman.groupme.util.DBConstants;
 
 import java.util.List;
 import java.util.Map;
@@ -24,18 +29,35 @@ import retrofit2.Response;
 public class ConversationActivity extends AppCompatActivity{
 
     private int groupId;
+    private GroupmeServer service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
-        groupId = getIntent().getExtras().getInt(CustomArrayAdapter.GROUP_ID);
-        Call<List<Map<String, String>>> conversations = GroupmeServerService.getServiceInstance().getService().getConversations(groupId);
-        conversations.enqueue(new Callback<List<Map<String, String>>>() {
+        groupId = getIntent().getExtras().getInt(DBConstants.GROUP_ID);
+        String action = getIntent().getExtras().getString(DBConstants.ACTION);
+        service = GroupmeServerService.getServiceInstance().getService();
+        if(action.equals(DBConstants.LIST)) {
+            Call<List<Map<String, String>>> conversations = service.getConversations(groupId);
+            conversations.enqueue(onResponse());
+        }
+        else {
+            SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            String userId = defaultSharedPreferences.getString(DBConstants.USER_ID, "");
+
+            Call<List<Map<String, String>>> conversations = service.registerAndGetConversations(userId, groupId);
+            conversations.enqueue(onResponse());
+        }
+    }
+
+    @NonNull
+    private Callback<List<Map<String, String>>> onResponse() {
+        return new Callback<List<Map<String, String>>>() {
             @Override
             public void onResponse(Call<List<Map<String, String>>> call, Response<List<Map<String, String>>> response) {
                 List<Map<String, String>> chatMsgs = response.body();
-                for (Map<String, String>  msg: chatMsgs) {
+                for (Map<String, String> msg : chatMsgs) {
                     addConversationToTheBox(msg.get("text"));
                 }
             }
@@ -44,7 +66,7 @@ public class ConversationActivity extends AppCompatActivity{
             public void onFailure(Call<List<Map<String, String>>> call, Throwable t) {
 
             }
-        });
+        };
     }
 
     public void send(View view) {
@@ -54,7 +76,7 @@ public class ConversationActivity extends AppCompatActivity{
 
         addConversationToTheBox(chatText.toString());
 
-        Call<ResponseBody> conversation = GroupmeServerService.getServiceInstance().getService().createConversation(groupId, chatText.toString());
+        Call<ResponseBody> conversation = service.createConversation(groupId, chatText.toString());
         final ConversationActivity currentActivity = this;
         conversation.enqueue(new Callback<ResponseBody>() {
             @Override
