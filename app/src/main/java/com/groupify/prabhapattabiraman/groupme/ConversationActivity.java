@@ -13,10 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.groupify.prabhapattabiraman.groupme.adapters.CustomArrayAdapter;
 import com.groupify.prabhapattabiraman.groupme.retrofit.GroupmeServer;
 import com.groupify.prabhapattabiraman.groupme.retrofit.impl.GroupmeServerService;
 import com.groupify.prabhapattabiraman.groupme.util.DBConstants;
+import com.groupify.prabhapattabiraman.groupme.util.Session;
 
 import java.util.List;
 import java.util.Map;
@@ -39,14 +39,11 @@ public class ConversationActivity extends AppCompatActivity{
         String action = getIntent().getExtras().getString(DBConstants.ACTION);
         service = GroupmeServerService.getServiceInstance().getService();
         if(action.equals(DBConstants.LIST)) {
-            Call<List<Map<String, String>>> conversations = service.getConversations(groupId);
+            Call<List<Map<String, String>>> conversations = service.getConversations(Session.getCurrentUser(this), groupId);
             conversations.enqueue(onResponse());
         }
         else {
-            SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            String userId = defaultSharedPreferences.getString(DBConstants.USER_ID, "");
-
-            Call<List<Map<String, String>>> conversations = service.registerAndGetConversations(userId, groupId);
+            Call<List<Map<String, String>>> conversations = service.registerAndGetConversations(Session.getCurrentUser(this), groupId);
             conversations.enqueue(onResponse());
         }
     }
@@ -76,7 +73,7 @@ public class ConversationActivity extends AppCompatActivity{
 
         addConversationToTheBox(chatText.toString());
 
-        Call<ResponseBody> conversation = service.createConversation(groupId, chatText.toString());
+        Call<ResponseBody> conversation = service.createConversation(Session.getCurrentUser(this), groupId, chatText.toString());
         final ConversationActivity currentActivity = this;
         conversation.enqueue(new Callback<ResponseBody>() {
             @Override

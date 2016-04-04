@@ -14,24 +14,24 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface GroupmeServer {
-    @GET("/groups")
-    Call<List<Map<String, String>>> listGroups(@Query("l") String l);
+    @GET("/user/{userId}/unSubscribedGroups")
+    Call<List<Map<String, String>>> listGroups(@Path("userId") String userId, @Query("l") String l);
 
-    @POST("/groups/create")
+    @POST("/user/{userId}/groups/create")
     @FormUrlEncoded
-    Call<ResponseBody> createGroup(@Field("name") String name, @Field("geoLocation") String geoLocation,
+    Call<ResponseBody> createGroup(@Path("userId") String userId, @Field("name") String name, @Field("geoLocation") String geoLocation,
                                    @Field("range") int range, @Field("open") boolean open);
 
-    @POST("/groups/{groupId}/conversation")
+    @POST("/user/{userId}/groups/{groupId}/conversation")
     @FormUrlEncoded
-    Call<ResponseBody> createConversation(@Path("groupId") int groupId, @Field("conversation") String text);
+    Call<ResponseBody> createConversation(@Path("userId") String userId, @Path("groupId") int groupId, @Field("conversation") String text);
 
     @POST("/users/create")
     @FormUrlEncoded
     Call<String> createUser(@Field("phoneNumber") String phoneNumber);
 
-    @GET("/groups/{groupId}/conversations")
-    Call<List<Map<String, String>>> getConversations(@Path("groupId") int groupId);
+    @GET("/user/{userId}/groups/{groupId}/conversations")
+    Call<List<Map<String, String>>> getConversations(@Path("userId") String userId, @Path("groupId") int groupId);
 
     @POST("users/{userId}/groups/{groupId}/register")
     Call<List<Map<String, String>>> registerAndGetConversations(@Path("userId") String userId, @Path("groupId") int groupId);

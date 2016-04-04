@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 
 import com.groupify.prabhapattabiraman.groupme.retrofit.impl.GroupmeServerService;
 import com.groupify.prabhapattabiraman.groupme.util.LocationProber;
+import com.groupify.prabhapattabiraman.groupme.util.Session;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -37,7 +38,8 @@ public class CreateNewGroupActivity extends AppCompatActivity{
         String currentLocation = locationProber.getCurrentLocation(locationManager, this);
 
 
-        Call<ResponseBody> response = GroupmeServerService.getServiceInstance().getService().createGroup(groupName, currentLocation, range, open);
+        Call<ResponseBody> response = GroupmeServerService.getServiceInstance().getService().createGroup(Session.getCurrentUser(this),
+                groupName, currentLocation, range, open);
         final Context currentActivity = this;
 
         response.enqueue(new Callback<ResponseBody>() {

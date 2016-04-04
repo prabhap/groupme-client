@@ -67,13 +67,14 @@ public class LocationProber implements LocationListener{
     }
 
     public void getCurrentGroups(LocationManager manager, final Context currentContext) {
-        Call<List<Map<String, String>>> groupsInRangeCall = GroupmeServerService.getServiceInstance().getService().listGroups(getCurrentLocation(manager, currentContext));
+        Call<List<Map<String, String>>> groupsInRangeCall = GroupmeServerService.getServiceInstance().getService().listGroups(Session.getCurrentUser(currentContext),
+                                                                                        getCurrentLocation(manager, currentContext));
         groupsInRangeCall.enqueue(new Callback<List<Map<String, String>>>() {
             @Override
             public void onResponse(Call<List<Map<String, String>>> call, Response<List<Map<String, String>>> response) {
                 List<Map<String, String>> groupsInRange = response.body();
                 ArrayList<Group> groups = new ArrayList<Group>();
-                for (Map<String, String> keyPair  : groupsInRange) {
+                        for (Map<String, String> keyPair  : groupsInRange) {
                     groups.add(new Group(keyPair.get(GROUP_NAME), Integer.valueOf(keyPair.get(DBConstants.ID))));
                 }
 

@@ -17,11 +17,11 @@ import com.groupify.prabhapattabiraman.groupme.util.pojo.Group;
 
 import java.util.ArrayList;
 
-public class CustomArrayAdapter extends ArrayAdapter {
+public class GroupListAdapter extends ArrayAdapter {
     private String[] groupsInRange;
     private ListGroupActivity currentActivity;
 
-    public CustomArrayAdapter(ListGroupActivity listGroupActivity, int simple_list_item, ArrayList<Group> groupsInRange) {
+    public GroupListAdapter(ListGroupActivity listGroupActivity, int simple_list_item, ArrayList<Group> groupsInRange) {
         super(listGroupActivity, simple_list_item, groupsInRange);
         this.currentActivity = listGroupActivity;
     }
