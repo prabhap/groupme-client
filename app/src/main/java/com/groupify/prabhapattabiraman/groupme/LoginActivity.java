@@ -1,6 +1,7 @@
 package com.groupify.prabhapattabiraman.groupme;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -72,9 +73,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void captureCurrentLocationAndProceedCourse() {
-        LocationProber locationProber = getLocationInstance();
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationProber.getCurrentGroups(locationManager, this);
+        Intent intent = new Intent(this, UserDashboard.class);
+        this.startActivity(intent);
     }
 
 }

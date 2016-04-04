@@ -15,6 +15,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListGroupActivity"/>
+        <activity android:name=".UserDashboard"/>
         <activity android:name=".CreateNewGroupActivity"/>
         <activity android:name=".ConversationActivity" android:windowSoftInputMode="adjustResize" />
     </application>

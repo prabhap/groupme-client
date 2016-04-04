@@ -1,20 +1,9 @@
 package com.groupify.prabhapattabiraman.groupme;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.groupify.prabhapattabiraman.groupme.adapters.GroupListAdapter;
-import com.groupify.prabhapattabiraman.groupme.util.DBConstants;
-import com.groupify.prabhapattabiraman.groupme.util.pojo.Group;
-
-import java.util.ArrayList;
-
-public class ListGroupActivity extends AppCompatActivity {
+public class ListGroupActivity extends GroupList {
     SimpleCursorAdapter mAdapter;
 
 
@@ -22,18 +11,13 @@ public class ListGroupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_group);
-        final ListView listview = (ListView) findViewById(R.id.listGroups);
-        TextView noGroupMsg = (TextView) findViewById(R.id.no_group_msg);
-        ArrayList<Group> groupsInRange = getIntent().getParcelableArrayListExtra(DBConstants.GROUPS);
-
-        listview.setVisibility(groupsInRange.isEmpty() ? View.INVISIBLE : View.VISIBLE);
-        noGroupMsg.setVisibility(groupsInRange.isEmpty() ? View.VISIBLE : View.INVISIBLE);
-
-        listview.setAdapter(new GroupListAdapter(this, R.layout.simple_list_item, groupsInRange));
+        processAndListGroups(true);
     }
 
-    public void createNewGroup(View view) {
-        Intent intent = new Intent(this, CreateNewGroupActivity.class);
-        this.startActivity(intent);
+    @Override
+    public int getListGroupView() {
+        return R.id.listGroups;
     }
+
+
 }

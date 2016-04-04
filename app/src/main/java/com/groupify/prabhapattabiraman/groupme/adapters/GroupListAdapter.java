@@ -18,12 +18,15 @@ import com.groupify.prabhapattabiraman.groupme.util.pojo.Group;
 import java.util.ArrayList;
 
 public class GroupListAdapter extends ArrayAdapter {
-    private String[] groupsInRange;
-    private ListGroupActivity currentActivity;
+    private final ArrayList<Group> groupsInRange;
+    private boolean unsubscribedGroups;
+    private Activity currentActivity;
 
-    public GroupListAdapter(ListGroupActivity listGroupActivity, int simple_list_item, ArrayList<Group> groupsInRange) {
+    public GroupListAdapter(Activity listGroupActivity, int simple_list_item, ArrayList<Group> groupsInRange, boolean unsubscribedGroups) {
         super(listGroupActivity, simple_list_item, groupsInRange);
         this.currentActivity = listGroupActivity;
+        this.groupsInRange = groupsInRange;
+        this.unsubscribedGroups = unsubscribedGroups;
     }
 
     static class ViewHolder {
@@ -48,10 +51,22 @@ public class GroupListAdapter extends ArrayAdapter {
         ViewHolder h = (ViewHolder) rowView.getTag();
 
         h.text.setText(group.getName());
-        h.joinButton.setOnClickListener(attachOnClickListener(group.getId()));
+        if(unsubscribedGroups) {
+            h.joinButton.setOnClickListener(attachOnClickListener(group.getId()));
+        }else {
+            rowView.setOnClickListener(attachOnClickListener(group.getId()));
+            h.joinButton.setVisibility(View.INVISIBLE);
+        }
 
         return rowView;
     }
+
+    @Override
+    public int getCount(){
+        return groupsInRange!=null ? groupsInRange.size() : 0;
+    }
+
+
 
     private View.OnClickListener attachOnClickListener(final int groupId) {
         return  new View.OnClickListener() {
@@ -59,7 +74,11 @@ public class GroupListAdapter extends ArrayAdapter {
             public void onClick(View view) {
                 Intent intent = new Intent(currentActivity, ConversationActivity.class);
                 intent.putExtra(DBConstants.GROUP_ID, groupId);
-                intent.putExtra(DBConstants.ACTION, DBConstants.JOIN_AND_LIST);
+                if(unsubscribedGroups) {
+                    intent.putExtra(DBConstants.ACTION, DBConstants.JOIN_AND_LIST);
+                } else {
+                    intent.putExtra(DBConstants.ACTION, DBConstants.LIST);
+                }
                 currentActivity.startActivity(intent);
             }
         };

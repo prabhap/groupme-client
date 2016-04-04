@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
 import com.groupify.prabhapattabiraman.groupme.ListGroupActivity;
+import com.groupify.prabhapattabiraman.groupme.UserDashboard;
 import com.groupify.prabhapattabiraman.groupme.retrofit.impl.GroupmeServerService;
 import com.groupify.prabhapattabiraman.groupme.util.pojo.Group;
 
@@ -21,8 +22,6 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.groupify.prabhapattabiraman.groupme.util.DBConstants.*;
 
 
 public class LocationProber implements LocationListener{
@@ -66,31 +65,6 @@ public class LocationProber implements LocationListener{
         return null;
     }
 
-    public void getCurrentGroups(LocationManager manager, final Context currentContext) {
-        Call<List<Map<String, String>>> groupsInRangeCall = GroupmeServerService.getServiceInstance().getService().listGroups(Session.getCurrentUser(currentContext),
-                                                                                        getCurrentLocation(manager, currentContext));
-        groupsInRangeCall.enqueue(new Callback<List<Map<String, String>>>() {
-            @Override
-            public void onResponse(Call<List<Map<String, String>>> call, Response<List<Map<String, String>>> response) {
-                List<Map<String, String>> groupsInRange = response.body();
-                ArrayList<Group> groups = new ArrayList<Group>();
-                        for (Map<String, String> keyPair  : groupsInRange) {
-                    groups.add(new Group(keyPair.get(GROUP_NAME), Integer.valueOf(keyPair.get(DBConstants.ID))));
-                }
-
-                Intent intent = new Intent(currentContext, ListGroupActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList(GROUPS, groups);
-                intent.putExtras(bundle);
-                currentContext.startActivity(intent);
-            }
-
-            @Override
-            public void onFailure(Call<List<Map<String, String>>> call, Throwable t) {
-                Toast.makeText(currentContext, "Failed", Toast.LENGTH_LONG);
-            }
-        });
-    }
 
 
     @Override

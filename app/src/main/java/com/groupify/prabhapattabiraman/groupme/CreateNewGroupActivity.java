@@ -1,6 +1,7 @@
 package com.groupify.prabhapattabiraman.groupme;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.groupify.prabhapattabiraman.groupme.retrofit.impl.GroupmeServerService;
+import com.groupify.prabhapattabiraman.groupme.util.DBConstants;
 import com.groupify.prabhapattabiraman.groupme.util.LocationProber;
 import com.groupify.prabhapattabiraman.groupme.util.Session;
 
@@ -45,9 +47,8 @@ public class CreateNewGroupActivity extends AppCompatActivity{
         response.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                LocationProber locationProber = getLocationInstance();
-                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                locationProber.getCurrentGroups(locationManager, currentActivity);
+                Intent intent = new Intent(currentActivity, UserDashboard.class);
+                currentActivity.startActivity(intent);
             }
 
             @Override
@@ -55,6 +56,5 @@ public class CreateNewGroupActivity extends AppCompatActivity{
 
             }
         });
-
     }
 }
