@@ -4,30 +4,44 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/dashboard"
-        android:orientation="vertical"
-        android:padding="20dp"></LinearLayout>
+        android:id="@+id/conversations"
+        android:layout_above="@+id/conversation_action_bar">
+
+        <LinearLayout
+            android:id="@+id/dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"></LinearLayout>
+    </ScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="10dp"
+        android:id="@+id/conversation_action_bar">
 
         <EditText
+            android:id="@+id/chatText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/chatText"
-             />
+            android:layout_toLeftOf="@+id/send_button"
+            android:layout_marginRight="10dp"
+            />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/send"
+            android:layout_alignParentRight="true"
             android:onClick="send"
-            android:layout_alignParentRight="true"/>
+            android:text="@string/send"
+            android:id="@+id/send_button"/>
     </RelativeLayout>
 
 

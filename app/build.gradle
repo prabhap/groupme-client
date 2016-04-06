@@ -1,8 +1,12 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+
 
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
+
 
     defaultConfig {
         applicationId "com.groupify.prabhapattabiraman.groupme"
@@ -18,19 +22,21 @@ android {
         }
     }
 
-        lintOptions {
-            abortOnError false
-        }
+    lintOptions {
+        abortOnError false
+    }
 
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:appcompat-v7:24.0.0-alpha1'
     compile 'com.squareup.retrofit2:retrofit:2.0.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
     compile 'de.plushnikov.lombok-intellij-plugin:lombok-plugin:0.5'
     compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.google.android.gms:play-services:7.5.0'
+    compile 'com.google.android.gms:play-services-gcm:7.5.0'
 
 }

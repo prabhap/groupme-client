@@ -1,27 +1,34 @@
 package com.groupify.prabhapattabiraman.groupme;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.location.LocationManager;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.groupify.prabhapattabiraman.groupme.adapters.GroupListAdapter;
 import com.groupify.prabhapattabiraman.groupme.util.DBConstants;
-import com.groupify.prabhapattabiraman.groupme.util.LocationProber;
-import com.groupify.prabhapattabiraman.groupme.util.pojo.Group;
-
-import java.util.ArrayList;
 
 public class UserDashboard extends GroupList {
+
+    private String gcmToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_dashboard);
         processAndListGroups(false);
+        BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.d(DBConstants.REGISTRATION_COMPLETE, "COMPLETE HURRY");
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter(DBConstants.REGISTRATION_COMPLETE));
+
     }
 
     public void createNewGroup(View view) {

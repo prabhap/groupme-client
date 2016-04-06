@@ -10,6 +10,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -38,4 +39,8 @@ public interface GroupmeServer {
 
     @GET("/users/{userId}/subscribedGroups")
     Call<List<Map<String,String>>> listSubscribedGroups(@Path("userId") String currentUser);
+
+    @PUT("/users/{userId}/updateToken")
+    @FormUrlEncoded
+    Call<ResponseBody> updateToken(@Path("userId") String currentUser, @Field("token") String token);
 }
