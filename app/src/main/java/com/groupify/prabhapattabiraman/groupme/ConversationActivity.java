@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +47,10 @@ public class ConversationActivity extends AppCompatActivity{
             Call<List<Map<String, String>>> conversations = service.registerAndGetConversations(Session.getCurrentUser(this), groupId);
             conversations.enqueue(onResponse());
         }
+
     }
+
+
 
     @NonNull
     private Callback<List<Map<String, String>>> onResponse() {
@@ -98,7 +102,5 @@ public class ConversationActivity extends AppCompatActivity{
         layoutParams.setMargins(0, 10, 0 , 10);
         child.setLayoutParams(layoutParams);
         conversationDashboard.addView(child);
-
-
     }
 }
