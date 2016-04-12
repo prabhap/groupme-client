@@ -30,7 +30,7 @@ import static com.groupify.prabhapattabiraman.groupme.util.LocationProber.getLoc
 
 
 
-public class CreateNewGroupActivity extends AppCompatActivity implements Validator.ValidationListener {
+public class CreateNewGroupActivity extends ValidatableAppCompactActivity {
 
     @NotEmpty
     private EditText groupNameEditText;
@@ -81,22 +81,5 @@ public class CreateNewGroupActivity extends AppCompatActivity implements Validat
 
             }
         });
-    }
-
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            String message = error.getCollatedErrorMessage(this);
-
-            // Display error messages ;)
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-            }
-        }
-
-
     }
 }
