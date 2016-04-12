@@ -9,7 +9,7 @@ public class BaseRetrofitService {
 
     public BaseRetrofitService() {
         baseRetrofitClient = new Retrofit.Builder()
-                .baseUrl("http://10.16.22.101:3000")
+                .baseUrl("http://shrouded-everglades-40862.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }

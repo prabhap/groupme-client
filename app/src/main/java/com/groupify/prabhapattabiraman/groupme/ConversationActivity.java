@@ -31,13 +31,16 @@ public class ConversationActivity extends AppCompatActivity{
 
     private int groupId;
     private GroupmeServer service;
+    private String groupName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
         groupId = getIntent().getExtras().getInt(DBConstants.GROUP_ID);
+        groupName = getIntent().getExtras().getString(DBConstants.GROUP_NAME);
         String action = getIntent().getExtras().getString(DBConstants.ACTION);
+        getSupportActionBar().setTitle(groupName);
         service = GroupmeServerService.getServiceInstance().getService();
         if(action.equals(DBConstants.LIST)) {
             Call<List<Map<String, String>>> conversations = service.getConversations(Session.getCurrentUser(this), groupId);
@@ -47,7 +50,6 @@ public class ConversationActivity extends AppCompatActivity{
             Call<List<Map<String, String>>> conversations = service.registerAndGetConversations(Session.getCurrentUser(this), groupId);
             conversations.enqueue(onResponse());
         }
-
     }
 
 

@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.groupify.prabhapattabiraman.groupme.ConversationActivity;
-import com.groupify.prabhapattabiraman.groupme.ListGroupActivity;
 import com.groupify.prabhapattabiraman.groupme.R;
 import com.groupify.prabhapattabiraman.groupme.util.DBConstants;
 import com.groupify.prabhapattabiraman.groupme.util.pojo.Group;
@@ -52,9 +51,9 @@ public class GroupListAdapter extends ArrayAdapter {
 
         h.text.setText(group.getName());
         if(unsubscribedGroups) {
-            h.joinButton.setOnClickListener(attachOnClickListener(group.getId()));
+            h.joinButton.setOnClickListener(attachOnClickListener(group.getId(), group.getName()));
         }else {
-            rowView.setOnClickListener(attachOnClickListener(group.getId()));
+            rowView.setOnClickListener(attachOnClickListener(group.getId(), group.getName()));
             h.joinButton.setVisibility(View.INVISIBLE);
         }
 
@@ -68,12 +67,13 @@ public class GroupListAdapter extends ArrayAdapter {
 
 
 
-    private View.OnClickListener attachOnClickListener(final int groupId) {
+    private View.OnClickListener attachOnClickListener(final int groupId, final String name) {
         return  new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(currentActivity, ConversationActivity.class);
                 intent.putExtra(DBConstants.GROUP_ID, groupId);
+                intent.putExtra(DBConstants.GROUP_NAME, name);
                 if(unsubscribedGroups) {
                     intent.putExtra(DBConstants.ACTION, DBConstants.JOIN_AND_LIST);
                 } else {

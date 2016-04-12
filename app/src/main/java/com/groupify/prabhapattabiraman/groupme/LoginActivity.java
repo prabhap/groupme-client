@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private LoginActivity loginActivity;
     private ProgressBar spinner;
-    private EditText phoneNumberInput;
+    private EditText emailInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             loginContainer.setVisibility(View.VISIBLE);
             spinner.setVisibility(View.GONE);
-            EditText phoneNumberInput = (EditText) findViewById(R.id.phone_number);
-            phoneNumberInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         }
     }
@@ -57,12 +55,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void createUser(View view) {
         spinner.setVisibility(View.VISIBLE);
-        EditText phoneNumberInput = (EditText) findViewById(R.id.phone_number);
+        EditText email = (EditText) findViewById(R.id.email);
 
-        final Editable phoneNumber = phoneNumberInput.getText();
+        final Editable emailText = email.getText();
 
 
-        Call<String> createUser = GroupmeServerService.getServiceInstance().getService().createUser(phoneNumber.toString());
+        Call<String> createUser = GroupmeServerService.getServiceInstance().getService().createUser(emailText.toString());
         createUser.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="conversationBox">#eee0e5</color>
+    <color name="green">#006400</color>
+    <color name="purple">#5D478B</color>
+    <color name="purpleDark">#5C246E</color>
+    <color name="red">#FF4500</color>
+
 </resources>

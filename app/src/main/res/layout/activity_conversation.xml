@@ -11,8 +11,6 @@
         android:layout_height="match_parent"
         android:id="@+id/conversations"
         android:layout_above="@+id/conversation_action_bar"
-        android:background="@color/conversationBox"
-
         android:fadeScrollbars="false" >
 
         <LinearLayout
@@ -30,6 +28,8 @@
         android:orientation="horizontal"
         android:paddingBottom="5dp"
         android:paddingTop="10dp"
+        android:paddingRight="3dp"
+        android:paddingLeft="3dp"
         android:id="@+id/conversation_action_bar">
 
         <EditText
@@ -40,10 +40,12 @@
             android:layout_marginRight="10dp"
             />
 
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:src="@drawable/send"
+            android:background="@null"
             android:onClick="send"
             android:text="@string/send"
             android:id="@+id/send_button"/>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">groupme</string>
+    <string name="app_name">GroupMe</string>
     <string name="google_app_id">groupme-server</string>
     <string name="groupName">Group Name</string>
     <string name="groupNameHintText">Enter your Group name</string>
@@ -13,10 +13,9 @@
     <string name="save">Save</string>
     <string name="no_group_msg">There are no groups yet! create a new one now</string>
     <string name="send">send</string>
-    <string name="enter_your_phone_number">Enter your phone number</string>
+    <string name="enter_your_email">Enter your email id</string>
     <string name="login">Login</string>
-    <string name="your_groups">Your Groups!</string>
+    <string name="your_groups">Your Groups</string>
     <string name="search_groups_in_your_range">Search groups in your range</string>
     <string name="no_group_nearby_msg">No other group exist in your radius</string>
-
 </resources>
