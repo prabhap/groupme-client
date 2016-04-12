@@ -51,5 +51,13 @@
             android:id="@+id/send_button"/>
     </RelativeLayout>
 
+    <ProgressBar
+        android:id="@+id/progressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"></ProgressBar>
+
+
 
 </RelativeLayout>

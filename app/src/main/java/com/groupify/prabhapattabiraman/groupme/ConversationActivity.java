@@ -37,6 +37,7 @@ public class ConversationActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
+        findViewById(R.id.progressIndicator).setVisibility(View.VISIBLE);
         groupId = getIntent().getExtras().getInt(DBConstants.GROUP_ID);
         groupName = getIntent().getExtras().getString(DBConstants.GROUP_NAME);
         String action = getIntent().getExtras().getString(DBConstants.ACTION);
@@ -59,6 +60,7 @@ public class ConversationActivity extends AppCompatActivity{
         return new Callback<List<Map<String, String>>>() {
             @Override
             public void onResponse(Call<List<Map<String, String>>> call, Response<List<Map<String, String>>> response) {
+                findViewById(R.id.progressIndicator).setVisibility(View.GONE);
                 List<Map<String, String>> chatMsgs = response.body();
                 for (Map<String, String> msg : chatMsgs) {
                     addConversationToTheBox(msg.get("text"));
@@ -67,12 +69,13 @@ public class ConversationActivity extends AppCompatActivity{
 
             @Override
             public void onFailure(Call<List<Map<String, String>>> call, Throwable t) {
-
+                findViewById(R.id.progressIndicator).setVisibility(View.GONE);
             }
         };
     }
 
     public void send(View view) {
+        findViewById(R.id.progressIndicator).setVisibility(View.VISIBLE);
         EditText chatBox = (EditText) findViewById(R.id.chatText);
         Editable chatText = chatBox.getText();
         chatBox.setText("");
@@ -84,11 +87,13 @@ public class ConversationActivity extends AppCompatActivity{
         conversation.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                findViewById(R.id.progressIndicator).setVisibility(View.GONE);
                 Toast.makeText(currentActivity, "Success saved conversation", Toast.LENGTH_SHORT);
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                findViewById(R.id.progressIndicator).setVisibility(View.GONE);
                 Toast.makeText(currentActivity, "failed saved conversation", Toast.LENGTH_SHORT);
             }
         });

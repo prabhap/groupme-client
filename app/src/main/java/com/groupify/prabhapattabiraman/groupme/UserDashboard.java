@@ -20,6 +20,7 @@ public class UserDashboard extends GroupList {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_dashboard);
         processAndListGroups(false);
+        findViewById(R.id.progressIndicator).setVisibility(View.VISIBLE);
         BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

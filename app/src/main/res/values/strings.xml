@@ -2,11 +2,11 @@
     <string name="app_name">GroupMe</string>
     <string name="google_app_id">groupme-server</string>
     <string name="groupName">Group Name</string>
-    <string name="groupNameHintText">Enter your Group name</string>
+    <string name="groupNameHintText">Type group name here</string>
     <string name="closedGroup">Closed Group</string>
     <string name="openGroup">Open Group</string>
     <string name="rangeToCover">Range</string>
-    <string name="rangeHintText">Enter range to cover</string>
+    <string name="rangeHintText">Enter the range to cover</string>
     <string name="noPermissionMsg">Please give appropriate permissions for the app. Enable Internet and GPS for smooth functioning</string>
     <string name="groups_in_your_range">Groups in your range</string>
     <string name="create_new_group">Create new Group</string>

@@ -6,22 +6,12 @@
     android:padding="10dp">
 
 
-    <LinearLayout
-        android:id="@+id/linlaHeaderProgress"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ProgressBar
-            android:id="@+id/pbHeaderProgress"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></ProgressBar>
-    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"></ProgressBar>
 
 
     <LinearLayout
@@ -39,7 +29,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:hint="@string/enter_your_email"
-            android:inputType="textEmailAddress"
+            android:inputType="textAutoCorrect"
             android:padding="20dp" />
 
         <Button

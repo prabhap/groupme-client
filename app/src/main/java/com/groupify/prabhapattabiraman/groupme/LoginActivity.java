@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         preferences = PreferenceManager.getDefaultSharedPreferences(loginActivity);
 
         View loginContainer = findViewById(R.id.login_container);
-        spinner = (ProgressBar) findViewById(R.id.pbHeaderProgress);
+        spinner = (ProgressBar) findViewById(R.id.progressIndicator);
         spinner.setVisibility(View.VISIBLE);
 
         showLoginOrRedirect(loginContainer);
@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showLoginOrRedirect(View loginContainer) {
-        if(preferences.contains(DBConstants.USER_ID)) {
+        if (preferences.contains(DBConstants.USER_ID)) {
             loginContainer.setVisibility(View.GONE);
             captureCurrentLocationAndProceedCourse();
         } else {
@@ -54,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void createUser(View view) {
-        spinner.setVisibility(View.VISIBLE);
         EditText email = (EditText) findViewById(R.id.email);
 
         final Editable emailText = email.getText();
@@ -64,7 +63,8 @@ public class LoginActivity extends AppCompatActivity {
         createUser.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                String  userId = response.body();
+                spinner.setVisibility(View.GONE);
+                String userId = response.body();
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString(DBConstants.USER_ID, userId);
                 editor.apply();
@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
+                spinner.setVisibility(View.GONE);
             }
         });
     }

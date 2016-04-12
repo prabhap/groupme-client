@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
@@ -35,6 +36,7 @@ public abstract class GroupList extends AppCompatActivity{
 
     public abstract int getListGroupView();
 
+
     public void processAndListGroups(boolean unsubscribedGroups) {
         locationProber = LocationProber.getLocationInstance();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -61,6 +63,8 @@ public abstract class GroupList extends AppCompatActivity{
         groupsInRangeCall.enqueue(new Callback<List<Map<String, String>>>() {
             @Override
             public void onResponse(Call<List<Map<String, String>>> call, Response<List<Map<String, String>>> response) {
+                findViewById(R.id.progressIndicator).setVisibility(View.GONE);
+
                 List<Map<String, String>> groupsInRange = response.body();
                 groupsToDisplay = new ArrayList<Group>();
                 for (Map<String, String> keyPair  : groupsInRange) {
@@ -74,11 +78,11 @@ public abstract class GroupList extends AppCompatActivity{
                 noGroupMsg.setVisibility(groupsToDisplay.isEmpty() ? View.VISIBLE : View.INVISIBLE);
 
                 listview.setAdapter(new GroupListAdapter(currentContext, R.layout.simple_list_item, groupsToDisplay, unsubscribedGroups));
-
             }
 
             @Override
             public void onFailure(Call<List<Map<String, String>>> call, Throwable t) {
+                findViewById(R.id.progressIndicator).setVisibility(View.GONE);
                 Toast.makeText(currentContext, "Failed", Toast.LENGTH_LONG);
             }
         });
